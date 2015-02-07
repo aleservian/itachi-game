@@ -1,5 +1,6 @@
-function Sprite(context,obj,keyboard,objSheet){
+function Sprite(context,obj,keyboard,objSheet,animation){
   this.context = context;
+  this.animation = animation
   this.keyboard = keyboard;
   this.x = obj.x || 0;
   this.y = obj.y || 0;
@@ -37,8 +38,19 @@ Sprite.prototype.update=function(){
     this.direction = RIGHT;
     this.sheet.nextFrame();
     this.x+=this.speedx;
+  }else if(this.keyboard.down(KEYQ)){
+    if(this.direction===RIGHT){
+      this.sheet.line = this.sheet.powerQ.right.line;
+      this.sheet.columns = this.sheet.powerQ.right.columns;
+    }
+    if(this.direction===LEFT){
+      this.sheet.line = this.sheet.powerQ.left.line;
+      this.sheet.columns = this.sheet.powerQ.left.columns;
+    }
+    this.sheet.interval=this.sheet.powerQ.interval;
+    this.sheet.nextFrame();
   }else{
-    if(this.sheet.columns!==this.sheet.walk.right.columns){
+    if(this.sheet.columns!==this.sheet.walk.right.columns || this.sheet.columns!==this.sheet.walk.left.columns){
       this.sheet.column = 0;
     }
     if(this.direction===RIGHT){
@@ -54,4 +66,7 @@ Sprite.prototype.update=function(){
     this.walking = false;
   }
   
+}
+Sprite.prototype.powerQ=function(){
+  console.log('jutsu');
 }

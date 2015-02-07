@@ -1,24 +1,3 @@
-var sonicSheet = {
-	img:'http://alexandreservian.com.br/game/spritesheet.png',
-	sheet:{
-		width: 52,
-		height: 52,
-		walk:{
-			left: {lines:0},
-			right: {}
-		},
-		run:{
-			left:{line: 1,columns: 8},
-			right:{}
-		},
-		interval:60,
-	    lines:3,
-	    columns:8,
-	    line:0,
-	    column:0
-	}
-};
-
 var itachiSheet = {
 	img:'img/itachi.png',
 	sheet:{
@@ -37,6 +16,11 @@ var itachiSheet = {
 	    	interval: 60,
 			right:{line: 2,columns: 6},
 			left:{line: 3,columns: 6}
+		},
+		powerQ:{
+			interval: 70,
+			right:{line: 4,columns: 7},
+			left:{line: 5,columns: 7}
 		}
 	}
 };
