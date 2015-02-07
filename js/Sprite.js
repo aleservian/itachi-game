@@ -19,6 +19,7 @@ Sprite.prototype.update=function(){
     if(!this.walking || this.direction != LEFT){
       this.sheet.line = this.sheet.run.left.line;
       this.sheet.columns = this.sheet.run.left.columns;
+      this.sheet.interval = this.sheet.run.interval;
       this.sheet.column = 0;
     }
     this.walking = true;
@@ -29,6 +30,7 @@ Sprite.prototype.update=function(){
     if(!this.walking || this.direction != RIGHT){
       this.sheet.line = this.sheet.run.right.line;
       this.sheet.columns = this.sheet.run.right.columns;
+      this.sheet.interval = this.sheet.run.interval;
       this.sheet.column = 0;
     }
     this.walking = true;
@@ -36,13 +38,19 @@ Sprite.prototype.update=function(){
     this.sheet.nextFrame();
     this.x+=this.speedx;
   }else{
-    if(this.direction===RIGHT){
+    if(this.sheet.columns!==this.sheet.walk.right.columns){
       this.sheet.column = 0;
     }
-    if(this.direction===LEFT){
-      this.sheet.column = 1;
+    if(this.direction===RIGHT){
+      this.sheet.line = this.sheet.walk.right.line;
+      this.sheet.columns = this.sheet.walk.right.columns;
     }
-    this.sheet.line = 0;
+    if(this.direction===LEFT){
+      this.sheet.line = this.sheet.walk.left.line;
+      this.sheet.columns = this.sheet.walk.left.columns;
+    }
+    this.sheet.interval=this.sheet.walk.interval;
+    this.sheet.nextFrame();
     this.walking = false;
   }
   

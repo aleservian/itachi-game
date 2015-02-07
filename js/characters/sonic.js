@@ -24,16 +24,17 @@ var itachiSheet = {
 	sheet:{
 		width: 80,
 		height: 80,
-		interval:60,
 	    lines:4,
 	    columns:6,
 	    line:0,
 	    column:0,
 	    walk:{
+	    	interval: 200,
 			right:{line: 0,columns: 2},
 	    	left:{line: 1,columns: 2}
 	    },
 	    run:{
+	    	interval: 60,
 			right:{line: 2,columns: 6},
 			left:{line: 3,columns: 6}
 		}
