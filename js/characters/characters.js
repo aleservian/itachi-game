@@ -13,12 +13,12 @@ var itachiSheet = {
 	    	left:{line: 1,columns: 2}
 	    },
 	    run:{
-	    	interval: 60,
+	    	interval: 80,
 			right:{line: 2,columns: 6},
 			left:{line: 3,columns: 6}
 		},
 		powerQ:{
-			interval: 70,
+			interval: 100,
 			right:{line: 4,columns: 7},
 			left:{line: 5,columns: 7}
 		}

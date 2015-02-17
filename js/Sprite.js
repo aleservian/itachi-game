@@ -11,12 +11,13 @@ function Sprite(context,obj,keyboard,objSheet,animation){
   this.sheet = new Spritesheet(context,imgSheet,objSheet.sheet);
   this.walking = false;
   this.direction = RIGHT;
+  this.powerOne = false;
 }
 Sprite.prototype.draw=function(){
   this.sheet.draw(this.x,this.y); 
 }
 Sprite.prototype.update=function(){
-  if(this.keyboard.down(KEYLEFT)){
+  if(this.keyboard.down(KEYLEFT) && !this.powerOne){
     if(!this.walking || this.direction != LEFT){
       this.sheet.line = this.sheet.run.left.line;
       this.sheet.columns = this.sheet.run.left.columns;
@@ -25,9 +26,10 @@ Sprite.prototype.update=function(){
     }
     this.walking = true;
     this.direction = LEFT;
-    this.x-=this.speedx;
     this.sheet.nextFrame();
-  }else if(this.keyboard.down(KEYRIGTH)){
+    this.powerOne = false;
+    this.x-=this.speedx;
+  }else if(this.keyboard.down(KEYRIGTH) && !this.powerOne){
     if(!this.walking || this.direction != RIGHT){
       this.sheet.line = this.sheet.run.right.line;
       this.sheet.columns = this.sheet.run.right.columns;
@@ -37,8 +39,15 @@ Sprite.prototype.update=function(){
     this.walking = true;
     this.direction = RIGHT;
     this.sheet.nextFrame();
+    this.powerOne = false;
     this.x+=this.speedx;
-  }else if(this.keyboard.down(KEYQ)){
+  }else if(this.powerOne){
+    if(this.sheet.columns!==this.sheet.powerQ.right.columns || this.sheet.columns!==this.sheet.powerQ.left.columns){
+      this.sheet.column = 0;
+    }
+    if(this.sheet.column === this.sheet.powerQ.right.columns-1){
+       this.powerOne = false;
+    }
     if(this.direction===RIGHT){
       this.sheet.line = this.sheet.powerQ.right.line;
       this.sheet.columns = this.sheet.powerQ.right.columns;
@@ -47,6 +56,7 @@ Sprite.prototype.update=function(){
       this.sheet.line = this.sheet.powerQ.left.line;
       this.sheet.columns = this.sheet.powerQ.left.columns;
     }
+    this.walking=false;
     this.sheet.interval=this.sheet.powerQ.interval;
     this.sheet.nextFrame();
   }else{
@@ -68,5 +78,5 @@ Sprite.prototype.update=function(){
   
 }
 Sprite.prototype.powerQ=function(){
-  console.log('jutsu');
+  this.powerOne = true;
 }
