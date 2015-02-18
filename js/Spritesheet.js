@@ -11,6 +11,7 @@ function Spritesheet(context,img,obj){
   this.run = obj.run || 0;
   this.walk = obj.walk || 0;
   this.powerQ = obj.powerQ || 0;
+  this.powerW = obj.powerW || 0;
 }
 Spritesheet.prototype.nextFrame=function(){
   var now = +new Date();

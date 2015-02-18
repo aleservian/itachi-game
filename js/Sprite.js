@@ -1,6 +1,6 @@
 function Sprite(context,obj,keyboard,objSheet,animation){
   this.context = context;
-  this.animation = animation
+  this.animation = animation;
   this.keyboard = keyboard;
   this.x = obj.x || 0;
   this.y = obj.y || 0;
@@ -12,6 +12,8 @@ function Sprite(context,obj,keyboard,objSheet,animation){
   this.walking = false;
   this.direction = RIGHT;
   this.powerOne = false;
+  this.powerTwo = false;
+  this.objpower = objSheet.fireball;
 }
 Sprite.prototype.draw=function(){
   this.sheet.draw(this.x,this.y); 
@@ -41,9 +43,30 @@ Sprite.prototype.update=function(){
     this.sheet.nextFrame();
     this.powerOne = false;
     this.x+=this.speedx;
+  }else if(this.powerTwo){
+    if(this.sheet.columns!==this.sheet.powerW.right.columns || this.sheet.columns!==this.sheet.powerW.left.columns){
+      this.sheet.column = 0;
+    }
+    if(this.sheet.column === this.sheet.powerW.right.columns-1){
+       this.powerTwo = false;
+    }
+    if(this.direction===RIGHT){
+      this.sheet.line = this.sheet.powerW.right.line;
+      this.sheet.columns = this.sheet.powerW.right.columns;
+    }
+    if(this.direction===LEFT){
+      this.sheet.line = this.sheet.powerW.left.line;
+      this.sheet.columns = this.sheet.powerW.left.columns;
+    }
+    this.walking=false;
+    this.sheet.interval=this.sheet.powerW.interval;
+    this.sheet.nextFrame();
   }else if(this.powerOne){
     if(this.sheet.columns!==this.sheet.powerQ.right.columns || this.sheet.columns!==this.sheet.powerQ.left.columns){
       this.sheet.column = 0;
+      /*var objPower = {x:this.x+62,y:2,speedx:0},
+      power = new Power(context,objPower,this.objpower);
+      this.animation.newSprites(power);*/
     }
     if(this.sheet.column === this.sheet.powerQ.right.columns-1){
        this.powerOne = false;
@@ -79,4 +102,7 @@ Sprite.prototype.update=function(){
 }
 Sprite.prototype.powerQ=function(){
   this.powerOne = true;
+}
+Sprite.prototype.powerW=function(){
+  this.powerTwo = true;
 }
